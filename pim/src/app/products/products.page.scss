@@ -1,0 +1,35 @@
+.products-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+ion-card {
+  width: 160px;
+  text-align: center;
+  margin: 10px;
+}
+
+.product-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto;
+}
+.buttons-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+.payment-icons {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 20px;
+}
+
+.pix-details {
+  text-align: center;
+  padding: 15px;
+}

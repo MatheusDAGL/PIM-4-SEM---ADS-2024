@@ -1,0 +1,42 @@
+
+
+<ion-content>
+  <div class="registers-container">
+    <h1 class="registers-title">Registrar-se</h1>
+    <form (submit)="registerUser()">
+      <ion-item>
+        <ion-label position="floating">Nome de Usuário</ion-label>
+        <ion-input
+          type="text"
+          [(ngModel)]="username"
+          name="username"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">E-mail</ion-label>
+        <ion-input
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Senha</ion-label>
+        <ion-input
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" type="submit" color="primary"
+        >Registrar</ion-button
+      >
+    </form>
+  </div>
+</ion-content>
