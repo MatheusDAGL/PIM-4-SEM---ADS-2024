@@ -6,18 +6,25 @@
         <ion-label position="floating">Email</ion-label>
         <ion-input formControlName="email" type="email"></ion-input>
       </ion-item>
-      <div *ngIf="emailErrorMessage" class="error-message">{{ emailErrorMessage }}</div>
+      <div *ngIf="emailErrorMessage" class="error-message">
+        {{ emailErrorMessage }}
+      </div>
 
       <ion-item [ngClass]="{'error-border': passwordErrorMessage}">
         <ion-label position="floating">Senha</ion-label>
         <ion-input formControlName="password" type="password"></ion-input>
       </ion-item>
-      <div *ngIf="passwordErrorMessage" class="error-message">{{ passwordErrorMessage }}</div>
+      <div *ngIf="passwordErrorMessage" class="error-message">
+        {{ passwordErrorMessage }}
+      </div>
 
-      <ion-button expand="full" type="button" (click)="onLogin()">Entrar</ion-button>
+      <ion-button expand="full" type="button" (click)="onLogin()"
+        >Entrar</ion-button
+      >
+      <div class="registers">
+        <h4>Ainda não tem conta?</h4>  <ion-button expand="full" type="button" routerLink="/registers"
+        >Registre-se</ion-button>
+      </div>
     </form>
-    <div class="registers">
-      <p>Ainda não tem conta? <a routerLink="/registers">Registre-se</a></p>
-    </div>
   </div>
 </ion-content>

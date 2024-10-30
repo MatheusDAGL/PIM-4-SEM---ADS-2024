@@ -1,7 +1,8 @@
 import { BaseService } from './../services/base.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,9 @@ export class RegistersPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private alertController: AlertController,
-    private BaseService: BaseService
+    private BaseService: BaseService,
+    private http: HttpClient,
+    private navController: NavController
   ) {
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -63,10 +66,14 @@ export class RegistersPage implements OnInit {
     }
 
     const { username, email, password } = this.registerForm.value;
+    const body = { username, email, password };
 
-    this.BaseService.register(username, email, password).subscribe({
-      next: async () => {
-        await this.presentAlert('Registro realizado com sucesso!', 'Bem-vindo(a).');
+    return this.http.post<any>('http://localhost:8000/register.php', body, { observe: 'response' }).subscribe({
+      next: async (response) => {
+        if (response.status === 200) {
+          await this.presentAlert('Registro realizado com sucesso!', 'Bem-vindo(a).');
+          this.navController.navigateForward('/login');
+        }
       },
       error: async () => {
         await this.presentAlert('Erro de registro', 'Não foi possível realizar o registro. Tente novamente.');

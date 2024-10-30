@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, AlertController, NavController } from '@ionic/angular';
 import { Product } from '../interfaces/product.interface';
 import { BaseService } from '../services/base.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-products',
@@ -21,7 +22,9 @@ export class ProductsPage implements OnInit {
     private modalController: ModalController,
     private alertController: AlertController,
     private navCtrl: NavController,
-    private baseService: BaseService
+    private baseService: BaseService,
+    private http: HttpClient,
+
   ) { }
 
   ngOnInit() {
@@ -94,6 +97,17 @@ export class ProductsPage implements OnInit {
       buttons: ['OK'],
     });
     await alert.present();
+
+    const purchaseDetails = {
+      product: 'Produto X',
+      quantity: 3,
+      payment: 'Cartão de Crédito'
+    };
+
+    this.http.post('http://localhost:8000/product.php', purchaseDetails).subscribe(
+      response => console.log('Compra registrada:', response),
+      error => console.error('Erro ao registrar compra:', error)
+    );
 
     setTimeout(async () => {
       const successAlert = await this.alertController.create({

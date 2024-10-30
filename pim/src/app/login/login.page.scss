@@ -57,19 +57,18 @@
   z-index: 2;
 }
 
+h4 {
+  color: white;
+  opacity: 100%;
+  margin-left: 20px;
+  position: relative;
+  z-index: 2;
+}
+
 .register {
   margin-top: 20px;
   color: white;
   opacity: 100% !important;
-
-  p {
-    font-size: 0.9rem;
-  }
-
-  a {
-    color: var(--ion-color-primary);
-    text-decoration: none;
-  }
 }
 
 .error-border {
