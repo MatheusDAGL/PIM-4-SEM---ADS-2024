@@ -1,7 +1,8 @@
 import { BaseService } from './../services/base.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,11 @@ export class LoginPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private alertController: AlertController,
-    private BaseService: BaseService
+    private BaseService: BaseService,
+    private http: HttpClient,
+    private navController: NavController
+
+
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -32,6 +37,11 @@ export class LoginPage implements OnInit {
     this.loginForm.get('password')?.valueChanges.subscribe(() => {
       this.passwordErrorMessage = null;
     });
+  }
+
+  navigateToRegister() {
+    this.navController.navigateForward('/registers');
+
   }
 
   async onLogin() {
@@ -53,14 +63,19 @@ export class LoginPage implements OnInit {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
 
-    this.BaseService.login(email, password).subscribe({
+    return this.http.get<any>(`http://localhost:8000/login.php?email=${email}&password=${password}`, { observe: 'response' }).subscribe({
       next: async (response) => {
-        await this.presentAlert('Login realizado com sucesso!', 'Bem-vindo.');
+        if (response.body.status === 200) {
+          await this.presentAlert('Login realizado com sucesso!', 'Bem-vindo(a).');
+          this.navController.navigateForward('/products');
+        } else if (response.body.status == 401) {
+          await this.presentAlert('Erro de login', `${response.body.error}`);
+        }
       },
-      error: async (error) => {
-        await this.presentAlert('Erro de login', 'Email ou senha incorretos.');
+      error: async () => {
+        await this.presentAlert('Erro de login', 'Não foi possível realizar o login. Tente novamente.');
       }
-    });
+    })
   }
 
   async presentAlert(header: string, message: string) {

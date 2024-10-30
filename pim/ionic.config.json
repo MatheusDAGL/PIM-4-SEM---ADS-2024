@@ -3,5 +3,12 @@
   "integrations": {
     "capacitor": {}
   },
-  "type": "angular"
+  "type": "angular",
+
+  "proxies": [
+    {
+      "path": "/register.php",
+      "proxyUrl": "http://localhost:8000/register.php"
+    }
+  ]
 }
