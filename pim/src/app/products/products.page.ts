@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, AlertController, NavController } from '@ionic/angular';
 import { Product } from '../interfaces/product.interface';
-import { ProductService } from '../services/product.service';
+import { BaseService } from '../services/base.service';
 
 @Component({
   selector: 'app-products',
@@ -21,7 +21,7 @@ export class ProductsPage implements OnInit {
     private modalController: ModalController,
     private alertController: AlertController,
     private navCtrl: NavController,
-    private productService: ProductService
+    private baseService: BaseService
   ) { }
 
   ngOnInit() {
@@ -29,7 +29,7 @@ export class ProductsPage implements OnInit {
   }
 
   loadProducts() {
-    this.productService.getProducts().subscribe(
+    this.baseService.getProducts().subscribe(
       (data: Product[]) => {
         this.products = data;
       },

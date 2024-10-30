@@ -1,3 +1,4 @@
+import { BaseService } from './../services/base.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
@@ -12,7 +13,11 @@ export class LoginPage implements OnInit {
   emailErrorMessage: string | null = null;
   passwordErrorMessage: string | null = null;
 
-  constructor(private formBuilder: FormBuilder, private alertController: AlertController) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private alertController: AlertController,
+    private BaseService: BaseService
+  ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -48,7 +53,14 @@ export class LoginPage implements OnInit {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
 
-    await this.presentAlert('Login realizado com sucesso!', `Bem Vindo.`);
+    this.BaseService.login(email, password).subscribe({
+      next: async (response) => {
+        await this.presentAlert('Login realizado com sucesso!', 'Bem-vindo.');
+      },
+      error: async (error) => {
+        await this.presentAlert('Erro de login', 'Email ou senha incorretos.');
+      }
+    });
   }
 
   async presentAlert(header: string, message: string) {

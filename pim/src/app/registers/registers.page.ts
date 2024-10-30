@@ -1,27 +1,86 @@
+import { BaseService } from './../services/base.service';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-registers',
+  selector: 'app-register',
   templateUrl: './registers.page.html',
   styleUrls: ['./registers.page.scss'],
 })
-export class RegistersPage  {
+export class RegistersPage implements OnInit {
+  registerForm: FormGroup;
+  usernameErrorMessage: string | null = null;
+  emailErrorMessage: string | null = null;
+  passwordErrorMessage: string | null = null;
 
-  username: string = '';
-  email: string = '';
-  password: string = '';
+  constructor(
+    private formBuilder: FormBuilder,
+    private alertController: AlertController,
+    private BaseService: BaseService
+  ) {
+    this.registerForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+    });
+  }
 
-  constructor() { }
+  ngOnInit() {
+    this.registerForm.get('username')?.valueChanges.subscribe(() => {
+      this.usernameErrorMessage = null;
+    });
+    this.registerForm.get('email')?.valueChanges.subscribe(() => {
+      this.emailErrorMessage = null;
+    });
+    this.registerForm.get('password')?.valueChanges.subscribe(() => {
+      this.passwordErrorMessage = null;
+    });
+  }
 
-  registerUser() {
-    if (this.username && this.email && this.password) {
-      console.log('Usuário registrado com sucesso!');
-      console.log('Nome:', this.username);
-      console.log('E-mail:', this.email);
-      console.log('Senha:', this.password);
+  async registerUser() {
+    this.usernameErrorMessage = null;
+    this.emailErrorMessage = null;
+    this.passwordErrorMessage = null;
 
-    } else {
-      console.log('Por favor, preencha todos os campos.');
+    if (this.registerForm.invalid) {
+      if (this.registerForm.get('username')?.invalid) {
+        this.usernameErrorMessage = 'O campo nome de usuário é obrigatório.';
+      }
+      if (this.registerForm.get('email')?.invalid) {
+        if (this.registerForm.get('email')?.hasError('required')) {
+          this.emailErrorMessage = 'O campo e-mail é obrigatório.';
+        } else if (this.registerForm.get('email')?.hasError('email')) {
+          this.emailErrorMessage = 'O formato do e-mail é inválido.';
+        }
+      }
+      if (this.registerForm.get('password')?.invalid) {
+        this.passwordErrorMessage = 'O campo senha é obrigatório.';
+      }
+
+      await this.presentAlert('Formulário inválido', 'Por favor, preencha todos os campos corretamente.');
+      return;
     }
+
+    const { username, email, password } = this.registerForm.value;
+
+    this.BaseService.register(username, email, password).subscribe({
+      next: async () => {
+        await this.presentAlert('Registro realizado com sucesso!', 'Bem-vindo(a).');
+      },
+      error: async () => {
+        await this.presentAlert('Erro de registro', 'Não foi possível realizar o registro. Tente novamente.');
+      }
+    });
+  }
+
+  async presentAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['OK'],
+    });
+
+    await alert.present();
   }
 }
