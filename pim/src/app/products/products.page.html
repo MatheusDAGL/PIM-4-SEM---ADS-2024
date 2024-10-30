@@ -1,0 +1,134 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Produtos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="products-list">
+    <ion-card *ngFor="let product of products">
+      <ion-img src="imagem q vai vir do porduct.imageurl" class="product-image"></ion-img>
+      <ion-card-content>
+        <h2>{{ product.name }}34567</h2>
+        <p>R$ {{ product.price.toFixed(2) }}sdfghjklç</p>
+        <ion-button expand="full" color="primary" (click)="addToCart(product)">
+          <ion-icon name="add-circle-outline"></ion-icon>
+          {{ product.quantity > 0 ? product.quantity : '+' }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="totalItems > 0">
+    <ion-fab-button (click)="openCartModal()">
+      {{ totalItems }}tfghjlkliofxfyiu
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+<!-- Modal para exibir itens do carrinho -->
+<ion-modal [isOpen]="isCartModalOpen" (ionModalDidDismiss)="closeCartModal()">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Carrinho</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="closeCartModal()">Fechar</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list *ngIf="cart.length > 0; else emptyCart">
+      <ion-item *ngFor="let item of cart">
+        <ion-label>
+          {{ item.name }} ({{ item.quantity }})
+        </ion-label>
+        <ion-note slot="end">
+          R$ {{ (item.price * item.quantity).toFixed(2) }}
+        </ion-note>
+      </ion-item>
+    </ion-list>
+    <ng-template #emptyCart>
+      <p style="text-align: center;">Seu carrinho está vazio.</p>
+    </ng-template>
+
+    <ion-footer>
+      <ion-item lines="none">
+        <ion-label><strong>Total</strong></ion-label>
+        <ion-note slot="end"><strong>R$ {{ calculateTotal().toFixed(2) }}</strong></ion-note>
+      </ion-item>
+    </ion-footer>
+  </ion-content>
+</ion-modal>
+
+<ion-modal [isOpen]="isCartModalOpen" (ionModalDidDismiss)="closeCartModal()">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Carrinho</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="closeCartModal()">Fechar</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content *ngIf="!isPaymentView">
+    <ion-list *ngIf="cart.length > 0; else emptyCart">
+      <ion-item *ngFor="let item of cart">
+        <ion-label>
+          {{ item.name }} ({{ item.quantity }})
+        </ion-label>
+        <ion-note slot="end">
+          R$ {{ (item.price * item.quantity).toFixed(2) }}
+        </ion-note>
+      </ion-item>
+    </ion-list>
+    <ng-template #emptyCart>
+      <p style="text-align: center;">Seu carrinho está vazio.</p>
+    </ng-template>
+
+    <ion-footer>
+      <ion-item lines="none">
+        <ion-label><strong>Total</strong></ion-label>
+        <ion-note slot="end"><strong>R$ {{ calculateTotal().toFixed(2) }}</strong></ion-note>
+      </ion-item>
+      <div class="buttons-container">
+        <ion-button color="success" (click)="showPaymentOptions()">Efetuar Pagamento</ion-button>
+        <ion-button color="danger" (click)="cancelPurchase()">Cancelar</ion-button>
+      </div>
+    </ion-footer>
+  </ion-content>
+
+  <ion-content *ngIf="isPaymentView">
+    <div *ngIf="!isCardPayment">
+      <h2>Escolha o método de pagamento</h2>
+      <div class="payment-icons">
+        <ion-icon name="cash-outline" size="large" (click)="selectPixPayment()"></ion-icon>
+        <ion-icon name="card-outline" size="large" (click)="selectCardPayment()"></ion-icon>
+      </div>
+    </div>
+    <div *ngIf="isPixPayment">
+      <h3>Pagamento via Pix</h3>
+      <div class="pix-details">
+        <ion-img src="assets/images/qrcode.png" alt="QR Code"></ion-img>
+        <ion-button (click)="copyPixCode()">Copiar Código Pix</ion-button>
+      </div>
+    </div>
+    <div *ngIf="isCardPayment">
+      <h3>Cadastro do Cartão</h3>
+      <!-- Formulário simplificado de cartão -->
+      <ion-item>
+        <ion-label position="floating">Número do Cartão</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Validade</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">CVV</ion-label>
+        <ion-input type="password"></ion-input>
+      </ion-item>
+      <ion-button color="primary" expand="full" (click)="confirmCardPayment()">Confirmar Compra</ion-button>
+    </div>
+  </ion-content>
+</ion-modal>

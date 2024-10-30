@@ -1,0 +1,46 @@
+<ion-content>
+  <div class="registers-container">
+    <h1 class="registers-title">Registrar-se</h1>
+    <form [formGroup]="registerForm" (ngSubmit)="registerUser()">
+      <ion-item [ngClass]="{'error-border': usernameErrorMessage}">
+        <ion-label position="floating">Nome de Usuário</ion-label>
+        <ion-input
+          type="text"
+          formControlName="username"
+          required
+        ></ion-input>
+      </ion-item>
+      <ion-text class="error-message" *ngIf="usernameErrorMessage">
+        {{ usernameErrorMessage }}
+      </ion-text>
+
+      <ion-item [ngClass]="{'error-border': emailErrorMessage}">
+        <ion-label position="floating">E-mail</ion-label>
+        <ion-input
+          type="email"
+          formControlName="email"
+          required
+        ></ion-input>
+      </ion-item>
+      <ion-text class="error-message" *ngIf="emailErrorMessage">
+        {{ emailErrorMessage }}
+      </ion-text>
+
+      <ion-item [ngClass]="{'error-border': passwordErrorMessage}">
+        <ion-label position="floating">Senha</ion-label>
+        <ion-input
+          type="password"
+          formControlName="password"
+          required
+        ></ion-input>
+      </ion-item>
+      <ion-text class="error-message" *ngIf="passwordErrorMessage">
+        {{ passwordErrorMessage }}
+      </ion-text>
+
+      <ion-button expand="block" type="submit" color="primary">
+        Registrar
+      </ion-button>
+    </form>
+  </div>
+</ion-content>
