@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, AlertController, NavController } from '@ionic/angular';
 import { Product } from '../interfaces/product.interface';
 import { BaseService } from '../services/base.service';
-import { HttpClient } from '@angular/common/http';
-import { timer } from 'rxjs'; // Adicionei a importação do 'timer'
 
 @Component({
   selector: 'app-products',
@@ -23,8 +21,7 @@ export class ProductsPage implements OnInit {
     private modalController: ModalController,
     private alertController: AlertController,
     private navCtrl: NavController,
-    private baseService: BaseService,
-    private http: HttpClient // Removi a vírgula final
+    private baseService: BaseService
   ) { }
 
   ngOnInit() {
@@ -34,6 +31,7 @@ export class ProductsPage implements OnInit {
   loadProducts() {
     this.baseService.getProducts().subscribe(
       (data: Product[]) => {
+        console.log('Produtos carregados:', data);
         this.products = data;
       },
       (error) => {
@@ -47,6 +45,7 @@ export class ProductsPage implements OnInit {
   }
 
   addToCart(product: Product) {
+    console.log('Adicionando ao carrinho:', product);
     this.totalItems++;
     const cartItem = this.cart.find((item) => item.id === product.id);
     if (cartItem) {
@@ -54,6 +53,11 @@ export class ProductsPage implements OnInit {
     } else {
       this.cart.push({ ...product, quantity: 1 });
     }
+
+    this.baseService.addProduct(product).subscribe(
+      response => console.log('Resposta do servidor:', response),
+      error => console.error('Erro ao adicionar produto:', error)
+    );
   }
 
   openCartModal() {
@@ -89,32 +93,14 @@ export class ProductsPage implements OnInit {
 
   async copyPixCode() {
     const pixCode = "123456789PIXCODE";
-    if (navigator.clipboard) {
-      await navigator.clipboard.writeText(pixCode);
-    } else {
-      console.error('Clipboard API not supported');
-      return;
-    }
-
+    await navigator.clipboard.writeText(pixCode);
     const alert = await this.alertController.create({
       header: 'Copiado!',
       message: 'O código Pix foi copiado com sucesso!',
       buttons: ['OK'],
     });
     await alert.present();
-
-    const purchaseDetails = {
-      product: 'Produto X',
-      quantity: 3,
-      payment: 'Cartão de Crédito'
-    };
-
-    this.http.post('http://localhost:8000/product.php', purchaseDetails).subscribe(
-      response => console.log('Compra registrada:', response),
-      error => console.error('Erro ao registrar compra:', error)
-    );
-
-    timer(15000).subscribe(async () => {
+    setTimeout(async () => {
       const successAlert = await this.alertController.create({
         header: 'Sucesso!',
         message: 'Pagamento efetuado com sucesso!',
@@ -123,7 +109,7 @@ export class ProductsPage implements OnInit {
       await successAlert.present();
       this.closeCartModal();
       this.navCtrl.navigateRoot('/products');
-    });
+    }, 15000);
   }
 
   async confirmCardPayment() {

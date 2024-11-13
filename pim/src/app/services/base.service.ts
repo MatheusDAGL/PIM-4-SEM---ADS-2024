@@ -15,6 +15,10 @@ export class BaseService {
     return this.http.get<Product[]>(`${this.apiUrl}/class/products.php`);
   }
 
+  addProduct(product: Product): Observable<any> {
+    return this.http.post(`${this.apiUrl}/addProduct`, product);
+  }
+
   login(email: string, password: string): Observable<any> {
     const body = { email, password };
     return this.http.post<any>(`${this.apiUrl}/class/login.php`, body);
