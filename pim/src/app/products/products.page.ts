@@ -9,7 +9,11 @@ import { BaseService } from '../services/base.service';
   styleUrls: ['./products.page.scss'],
 })
 export class ProductsPage implements OnInit {
-  products: Product[] = [];
+  products: Product[] = [
+    { id: 1, name: 'Produto 1', price: 10.00, quantity: 0, imageurl: 'assets/images/produto1.jpg' },
+    { id: 2, name: 'Produto 2', price: 20.00, quantity: 0, imageurl: 'assets/images/produto2.jpg' },
+    // Podemos adicionar mais produtos se quisermos
+  ];
   cart: Product[] = [];
   totalItems = 0;
   isCartModalOpen = false;
@@ -29,15 +33,6 @@ export class ProductsPage implements OnInit {
   }
 
   loadProducts() {
-    this.baseService.getProducts().subscribe(
-      (data: Product[]) => {
-        console.log('Produtos carregados:', data);
-        this.products = data;
-      },
-      (error) => {
-        console.error('Erro ao carregar produtos', error);
-      }
-    );
   }
 
   calculateTotal(): number {
@@ -45,7 +40,6 @@ export class ProductsPage implements OnInit {
   }
 
   addToCart(product: Product) {
-    console.log('Adicionando ao carrinho:', product);
     this.totalItems++;
     const cartItem = this.cart.find((item) => item.id === product.id);
     if (cartItem) {
@@ -53,11 +47,6 @@ export class ProductsPage implements OnInit {
     } else {
       this.cart.push({ ...product, quantity: 1 });
     }
-
-    this.baseService.addProduct(product).subscribe(
-      response => console.log('Resposta do servidor:', response),
-      error => console.error('Erro ao adicionar produto:', error)
-    );
   }
 
   openCartModal() {
