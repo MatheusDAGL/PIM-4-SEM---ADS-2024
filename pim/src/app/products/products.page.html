@@ -11,11 +11,7 @@
       <ion-card-content>
         <h2>Brócolis</h2>
         <p>R$ 6.00</p>
-        <ion-button
-          expand="full"
-          color="primary"
-          (click)="addToCart({ id: 1, name: 'Brócolis', price: 6.00, quantity: 0, imageurl: 'assets/images/brocolis.png' })"
-        >
+        <ion-button expand="full" color="primary" (click)="addToCart({ id: 1, name: 'Brócolis', price: 6.00, quantity: 0, imageurl: 'assets/images/brocolis.png' })">
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
@@ -26,11 +22,7 @@
       <ion-card-content>
         <h2>Alface</h2>
         <p>R$ 2.50</p>
-        <ion-button
-          expand="full"
-          color="primary"
-          (click)="addToCart({ id: 2, name: 'Alface', price: 2.50, quantity: 0, imageurl: 'assets/images/alface.png' })"
-        >
+        <ion-button expand="full" color="primary" (click)="addToCart({ id: 2, name: 'Alface', price: 2.50, quantity: 0, imageurl: 'assets/images/alface.png' })">
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
@@ -41,29 +33,18 @@
       <ion-card-content>
         <h2>Tomate</h2>
         <p>R$ 6.00</p>
-        <ion-button
-          expand="full"
-          color="primary"
-          (click)="addToCart({ id: 3, name: 'Tomate', price: 6.00, quantity: 0, imageurl: 'assets/images/tomate.png' })"
-        >
+        <ion-button expand="full" color="primary" (click)="addToCart({ id: 3, name: 'Tomate', price: 6.00, quantity: 0, imageurl: 'assets/images/tomate.png' })">
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
       </ion-card-content>
     </ion-card>
     <ion-card>
-      <ion-img
-        src="assets/images/pimentaoVerde.png"
-        class="product-image"
-      ></ion-img>
+      <ion-img src="assets/images/pimentaoVerde.png" class="product-image"></ion-img>
       <ion-card-content>
         <h2>Pimentão Verde</h2>
         <p>R$ 4.00</p>
-        <ion-button
-          expand="full"
-          color="primary"
-          (click)="addToCart({ id: 4, name: 'Pimentão Verde', price: 4.00, quantity: 0, imageurl: 'assets/images/pimentaoVerde.png' })"
-        >
+        <ion-button expand="full" color="primary" (click)="addToCart({ id: 4, name: 'Pimentão Verde', price: 4.00, quantity: 0, imageurl: 'assets/images/pimentaoVerde.png' })">
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
@@ -74,11 +55,7 @@
       <ion-card-content>
         <h2>Maçã</h2>
         <p>R$ 5.00</p>
-        <ion-button
-          expand="full"
-          color="primary"
-          (click)="addToCart({ id: 5, name: 'Maçã', price: 5.00, quantity: 0, imageurl: 'assets/images/maca.png' })"
-        >
+        <ion-button expand="full" color="primary" (click)="addToCart({ id: 5, name: 'Maçã', price: 5.00, quantity: 0, imageurl: 'assets/images/maca.png' })">
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
@@ -89,11 +66,7 @@
       <ion-card-content>
         <h2>Banana</h2>
         <p>R$ 3.00</p>
-        <ion-button
-          expand="full"
-          color="primary"
-          (click)="addToCart({ id: 6, name: 'Banana', price: 3.00, quantity: 0, imageurl: 'assets/images/banana.png' })"
-        >
+        <ion-button expand="full" color="primary" (click)="addToCart({ id: 6, name: 'Banana', price: 3.00, quantity: 0, imageurl: 'assets/images/banana.png' })">
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
@@ -104,11 +77,7 @@
       <ion-card-content>
         <h2>Laranja</h2>
         <p>R$ 4.00</p>
-        <ion-button
-          expand="full"
-          color="primary"
-          (click)="addToCart({ id: 7, name: 'Laranja', price: 4.00, quantity: 0, imageurl: 'assets/images/laranja.png' })"
-        >
+        <ion-button expand="full" color="primary" (click)="addToCart({ id: 7, name: 'Laranja', price: 4.00, quantity: 0, imageurl: 'assets/images/laranja.png' })">
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
@@ -119,23 +88,14 @@
       <ion-card-content>
         <h2>Morango</h2>
         <p>R$ 10.00</p>
-        <ion-button
-          expand="full"
-          color="primary"
-          (click)="addToCart({ id: 8, name: 'Morango', price: 10.00, quantity: 0, imageurl: 'assets/images/morango.png' })"
-        >
+        <ion-button expand="full" color="primary" (click)="addToCart({ id: 8, name: 'Morango', price: 10.00, quantity: 0, imageurl: 'assets/images/morango.png' })">
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
       </ion-card-content>
     </ion-card>
   </div>
-  <ion-fab
-    vertical="bottom"
-    horizontal="end"
-    slot="fixed"
-    *ngIf="totalItems > 0"
-  >
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="totalItems > 0">
     <ion-fab-button (click)="openCartModal()">
       {{ totalItems }}
     </ion-fab-button>
@@ -154,7 +114,9 @@
   <ion-content *ngIf="cart.length > 0; else emptyCart">
     <ion-list>
       <ion-item *ngFor="let item of cart">
-        <ion-label> {{ item.name }} ({{ item.quantity }}) </ion-label>
+        <ion-label>
+          {{ item.name }} ({{ item.quantity }})
+        </ion-label>
         <ion-note slot="end">
           R$ {{ (item.price * item.quantity).toFixed(2) }}
         </ion-note>
@@ -167,23 +129,91 @@
     <ion-footer>
       <ion-item lines="none">
         <ion-label><strong>Total</strong></ion-label>
-        <ion-note slot="end"
-          ><strong>R$ {{ calculateTotal().toFixed(2) }}</strong></ion-note
-        >
+        <ion-note slot="end"><strong>R$ {{ calculateTotal().toFixed(2) }}</strong></ion-note>
       </ion-item>
       <div class="buttons-container">
-        <ion-button color="success" (click)="openPaymentModal()"
-          >Efetuar Pagamento</ion-button
-        >
-        <ion-button color="danger" (click)="cancelPurchase()"
-          >Cancelar</ion-button
-        >
+        <ion-button color="success" (click)="openAddressModal()">Finalizar Compra</ion-button>
+        <ion-button color="danger" (click)="cancelPurchase()">Cancelar</ion-button>
       </div>
     </ion-footer>
   </ion-content>
   <ng-template #emptyCart>
-    <p style="text-align: center">Seu carrinho está vazio.</p>
+    <p style="text-align: center;">Seu carrinho está vazio.</p>
   </ng-template>
+</ion-modal>
+
+<ion-modal [isOpen]="isAddressModalOpen" (ionModalDidDismiss)="closeAddressModal()">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Endereço</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="closeAddressModal()">Fechar</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <form [formGroup]="addressForm" (ngSubmit)="submitAddress()">
+      <ion-item>
+        <ion-label position="floating">Nome Completo</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
+      <div *ngIf="addressForm.get('name').invalid && addressForm.get('name').touched">
+        <ion-text color="danger">Nome é obrigatório</ion-text>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">CPF</ion-label>
+        <ion-input type="text" formControlName="cpf"></ion-input>
+      </ion-item>
+      <div *ngIf="addressForm.get('cpf').invalid && addressForm.get('cpf').touched">
+        <ion-text color="danger">CPF é obrigatório e deve estar no formato 000.000.000-00</ion-text>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">Logradouro</ion-label>
+        <ion-input type="text" formControlName="street"></ion-input>
+      </ion-item>
+      <div *ngIf="addressForm.get('street').invalid && addressForm.get('street').touched">
+        <ion-text color="danger">Logradouro é obrigatório</ion-text>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">Bairro</ion-label>
+        <ion-input type="text" formControlName="neighborhood"></ion-input>
+      </ion-item>
+      <div *ngIf="addressForm.get('neighborhood').invalid && addressForm.get('neighborhood').touched">
+        <ion-text color="danger">Bairro é obrigatório</ion-text>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">CEP</ion-label>
+        <ion-input type="text" formControlName="zip"></ion-input>
+      </ion-item>
+      <div *ngIf="addressForm.get('zip').invalid && addressForm.get('zip').touched">
+        <ion-text color="danger">CEP é obrigatório e deve estar no formato 00000-000</ion-text>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">Cidade</ion-label>
+        <ion-input type="text" formControlName="city"></ion-input>
+      </ion-item>
+      <div *ngIf="addressForm.get('city').invalid && addressForm.get('city').touched">
+        <ion-text color="danger">Cidade é obrigatória</ion-text>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">Estado</ion-label>
+        <ion-input type="text" formControlName="state"></ion-input>
+      </ion-item>
+      <div *ngIf="addressForm.get('state').invalid && addressForm.get('state').touched">
+        <ion-text color="danger">Estado é obrigatório</ion-text>
+      </div>
+
+      <ion-footer>
+        <ion-button color="primary" expand="full" type="submit">Próximo</ion-button>
+      </ion-footer>
+    </form>
+  </ion-content>
 </ion-modal>
 
 <ion-modal

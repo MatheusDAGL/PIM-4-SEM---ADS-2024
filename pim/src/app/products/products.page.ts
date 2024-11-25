@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './products.page.html',
   styleUrls: ['./products.page.scss'],
 })
+
 export class ProductsPage implements OnInit {
   products: Product[] = [
     { id: 1, name: 'Brócolis', price: 6.0, quantity: 0, imageurl: 'assets/images/brocolis.png' },
@@ -19,14 +20,17 @@ export class ProductsPage implements OnInit {
     { id: 7, name: 'Laranja', price: 4.0, quantity: 0, imageurl: 'assets/images/laranja.png' },
     { id: 8, name: 'Morango', price: 10.0, quantity: 0, imageurl: 'assets/images/morango.png' },
   ];
+
   cart: Product[] = [];
   totalItems = 0;
   isCartModalOpen = false;
+  isAddressModalOpen = false;
   isPaymentModalOpen = false;
   isPaymentView = false;
   isPixPayment = false;
   isCardPayment = false;
   cardForm: FormGroup;
+  addressForm: FormGroup;
   display: any = 'none';
 
   constructor(
@@ -36,14 +40,23 @@ export class ProductsPage implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.cardForm = this.formBuilder.group({
-      cardNumber: ['', [Validators.required]],
-      cardHolder: ['', [Validators.required]],
-      expirationDate: ['', [Validators.required]],
-      cvv: ['', [Validators.required]],
+      cardNumber: ['', [Validators.required, Validators.pattern(/^\d{16}$/)]],
+      expiryDate: ['', [Validators.required, Validators.pattern(/^\d{2}\/\d{2}$/)]],
+      cvv: ['', [Validators.required, Validators.pattern(/^\d{3}$/)]],
+    });
+
+    this.addressForm = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      cpf: ['', [Validators.required, Validators.pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/)]],
+      street: ['', [Validators.required]],
+      neighborhood: ['', [Validators.required]],
+      zip: ['', [Validators.required, Validators.pattern(/^\d{5}-\d{3}$/)]],
+      city: ['', [Validators.required]],
+      state: ['', [Validators.required]],
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   addToCart(product: Product) {
     this.totalItems++;
@@ -76,13 +89,23 @@ export class ProductsPage implements OnInit {
 
   closeCartModal() {
     this.isCartModalOpen = false;
+    this.isAddressModalOpen = false;
     this.isPaymentView = false;
     this.isPixPayment = false;
     this.isCardPayment = false;
   }
 
-  openPaymentModal() {
+  openAddressModal() {
     this.isCartModalOpen = false;
+    this.isAddressModalOpen = true; 
+  }
+
+  closeAddressModal() {
+    this.isAddressModalOpen = false;
+  }
+
+  openPaymentModal() {
+    this.isAddressModalOpen = false;
     this.isPaymentModalOpen = true;
   }
 
@@ -99,6 +122,18 @@ export class ProductsPage implements OnInit {
     this.closeCartModal();
   }
 
+  async submitAddress() {
+    if (this.addressForm.valid) {
+      this.openPaymentModal();
+    } else {
+      const alert = await this.alertController.create({
+        header: 'Erro',
+        message: 'Por favor, preencha todos os campos obrigatórios corretamente.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+    }
+  }
   showPaymentOptions() {
     this.isPaymentView = true;
   }
@@ -140,19 +175,18 @@ export class ProductsPage implements OnInit {
       header: 'Sucesso!',
       message: 'Pagamento efetuado com sucesso!',
       buttons: ['OK'],
-
     });
     if (alert) setTimeout(() => {
       location.reload();
     }, 3000);
   }
+
   async confirmCardPayment() {
     if (this.cardForm.valid) {
       const alert = await this.alertController.create({
         header: 'Sucesso!',
         message: 'Pagamento efetuado com sucesso!',
         buttons: ['OK'],
-
       });
       if (alert) setTimeout(() => {
         location.reload();
