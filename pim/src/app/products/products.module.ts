@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
+import { BrowserModule } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
 
-import { ProductsPageRoutingModule } from './products-routing.module';
-
+import { AppRoutingModule } from './products-routing.module';
 import { ProductsPage } from './products.page';
+import { AppComponent } from '../app.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    ProductsPageRoutingModule
+  declarations: [
+    AppComponent,
+    ProductsPage
   ],
-  declarations: [ProductsPage]
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule
+  ],
 })
-export class ProductsPageModule {}
+export class AppModule { }

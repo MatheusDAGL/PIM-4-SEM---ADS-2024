@@ -15,10 +15,6 @@
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
-        <ion-button expand="full" color="danger" (click)="removeFromCart({ id: 1, name: 'Brócolis', price: 6.00, quantity: 0, imageurl: 'assets/images/brocolis.png' })">
-          <ion-icon name="remove-circle-outline"></ion-icon>
-          -
-        </ion-button>
       </ion-card-content>
     </ion-card>
     <ion-card>
@@ -29,10 +25,6 @@
         <ion-button expand="full" color="primary" (click)="addToCart({ id: 2, name: 'Alface', price: 2.50, quantity: 0, imageurl: 'assets/images/alface.png' })">
           <ion-icon name="add-circle-outline"></ion-icon>
           +
-        </ion-button>
-        <ion-button expand="full" color="danger" (click)="removeFromCart({ id: 2, name: 'Alface', price: 2.50, quantity: 0, imageurl: 'assets/images/alface.png' })">
-          <ion-icon name="remove-circle-outline"></ion-icon>
-          -
         </ion-button>
       </ion-card-content>
     </ion-card>
@@ -45,10 +37,6 @@
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
-        <ion-button expand="full" color="danger" (click)="removeFromCart({ id: 3, name: 'Tomate', price: 6.00, quantity: 0, imageurl: 'assets/images/tomate.png' })">
-          <ion-icon name="remove-circle-outline"></ion-icon>
-          -
-        </ion-button>
       </ion-card-content>
     </ion-card>
     <ion-card>
@@ -59,10 +47,6 @@
         <ion-button expand="full" color="primary" (click)="addToCart({ id: 4, name: 'Pimentão Verde', price: 4.00, quantity: 0, imageurl: 'assets/images/pimentaoVerde.png' })">
           <ion-icon name="add-circle-outline"></ion-icon>
           +
-        </ion-button>
-        <ion-button expand="full" color="danger" (click)="removeFromCart({ id: 4, name: 'Pimentão Verde', price: 4.00, quantity: 0, imageurl: 'assets/images/pimentaoVerde.png' })">
-          <ion-icon name="remove-circle-outline"></ion-icon>
-          -
         </ion-button>
       </ion-card-content>
     </ion-card>
@@ -75,10 +59,6 @@
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
-        <ion-button expand="full" color="danger" (click)="removeFromCart({ id: 5, name: 'Maçã', price: 5.00, quantity: 0, imageurl: 'assets/images/maca.png' })">
-          <ion-icon name="remove-circle-outline"></ion-icon>
-          -
-        </ion-button>
       </ion-card-content>
     </ion-card>
     <ion-card>
@@ -89,10 +69,6 @@
         <ion-button expand="full" color="primary" (click)="addToCart({ id: 6, name: 'Banana', price: 3.00, quantity: 0, imageurl: 'assets/images/banana.png' })">
           <ion-icon name="add-circle-outline"></ion-icon>
           +
-        </ion-button>
-        <ion-button expand="full" color="danger" (click)="removeFromCart({ id: 6, name: 'Banana', price: 3.00, quantity: 0, imageurl: 'assets/images/banana.png' })">
-          <ion-icon name="remove-circle-outline"></ion-icon>
-          -
         </ion-button>
       </ion-card-content>
     </ion-card>
@@ -105,10 +81,6 @@
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
-        <ion-button expand="full" color="danger" (click)="removeFromCart({ id: 7, name: 'Laranja', price: 4.00, quantity: 0, imageurl: 'assets/images/laranja.png' })">
-          <ion-icon name="remove-circle-outline"></ion-icon>
-          -
-        </ion-button>
       </ion-card-content>
     </ion-card>
     <ion-card>
@@ -119,10 +91,6 @@
         <ion-button expand="full" color="primary" (click)="addToCart({ id: 8, name: 'Morango', price: 10.00, quantity: 0, imageurl: 'assets/images/morango.png' })">
           <ion-icon name="add-circle-outline"></ion-icon>
           +
-        </ion-button>
-        <ion-button expand="full" color="danger" (click)="removeFromCart({ id: 8, name: 'Morango', price: 10.00, quantity: 0, imageurl: 'assets/images/morango.png' })">
-          <ion-icon name="remove-circle-outline"></ion-icon>
-          -
         </ion-button>
       </ion-card-content>
     </ion-card>
@@ -152,6 +120,10 @@
         <ion-note slot="end">
           R$ {{ (item.price * item.quantity).toFixed(2) }}
         </ion-note>
+        <ion-button color="danger" (click)="removeFromCart(item)">
+          <ion-icon name="remove-circle-outline"></ion-icon>
+          -
+        </ion-button>
       </ion-item>
     </ion-list>
     <ng-template #emptyCart>
@@ -184,6 +156,10 @@
         <ion-note slot="end">
           R$ {{ (item.price * item.quantity).toFixed(2) }}
         </ion-note>
+        <ion-button color="danger" (click)="removeFromCart(item)">
+          <ion-icon name="remove-circle-outline"></ion-icon>
+          -
+        </ion-button>
       </ion-item>
     </ion-list>
     <ion-footer>
@@ -214,7 +190,6 @@
     </div>
     <div *ngIf="isCardPayment">
       <h3>Cadastro do Cartão</h3>
-
       <ion-item>
         <ion-label position="floating">Número do Cartão</ion-label>
         <ion-input type="text"></ion-input>
