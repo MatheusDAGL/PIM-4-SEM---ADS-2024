@@ -11,7 +11,11 @@
       <ion-card-content>
         <h2>Brócolis</h2>
         <p>R$ 6.00</p>
-        <ion-button expand="full" color="primary" (click)="addToCart({ id: 1, name: 'Brócolis', price: 6.00, quantity: 0, imageurl: 'assets/images/brocolis.png' })">
+        <ion-button
+          expand="full"
+          color="primary"
+          (click)="addToCart({ id: 1, name: 'Brócolis', price: 6.00, quantity: 0, imageurl: 'assets/images/brocolis.png' })"
+        >
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
@@ -22,7 +26,11 @@
       <ion-card-content>
         <h2>Alface</h2>
         <p>R$ 2.50</p>
-        <ion-button expand="full" color="primary" (click)="addToCart({ id: 2, name: 'Alface', price: 2.50, quantity: 0, imageurl: 'assets/images/alface.png' })">
+        <ion-button
+          expand="full"
+          color="primary"
+          (click)="addToCart({ id: 2, name: 'Alface', price: 2.50, quantity: 0, imageurl: 'assets/images/alface.png' })"
+        >
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
@@ -33,18 +41,29 @@
       <ion-card-content>
         <h2>Tomate</h2>
         <p>R$ 6.00</p>
-        <ion-button expand="full" color="primary" (click)="addToCart({ id: 3, name: 'Tomate', price: 6.00, quantity: 0, imageurl: 'assets/images/tomate.png' })">
+        <ion-button
+          expand="full"
+          color="primary"
+          (click)="addToCart({ id: 3, name: 'Tomate', price: 6.00, quantity: 0, imageurl: 'assets/images/tomate.png' })"
+        >
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
       </ion-card-content>
     </ion-card>
     <ion-card>
-      <ion-img src="assets/images/pimentaoVerde.png" class="product-image"></ion-img>
+      <ion-img
+        src="assets/images/pimentaoVerde.png"
+        class="product-image"
+      ></ion-img>
       <ion-card-content>
         <h2>Pimentão Verde</h2>
         <p>R$ 4.00</p>
-        <ion-button expand="full" color="primary" (click)="addToCart({ id: 4, name: 'Pimentão Verde', price: 4.00, quantity: 0, imageurl: 'assets/images/pimentaoVerde.png' })">
+        <ion-button
+          expand="full"
+          color="primary"
+          (click)="addToCart({ id: 4, name: 'Pimentão Verde', price: 4.00, quantity: 0, imageurl: 'assets/images/pimentaoVerde.png' })"
+        >
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
@@ -55,7 +74,11 @@
       <ion-card-content>
         <h2>Maçã</h2>
         <p>R$ 5.00</p>
-        <ion-button expand="full" color="primary" (click)="addToCart({ id: 5, name: 'Maçã', price: 5.00, quantity: 0, imageurl: 'assets/images/maca.png' })">
+        <ion-button
+          expand="full"
+          color="primary"
+          (click)="addToCart({ id: 5, name: 'Maçã', price: 5.00, quantity: 0, imageurl: 'assets/images/maca.png' })"
+        >
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
@@ -66,7 +89,11 @@
       <ion-card-content>
         <h2>Banana</h2>
         <p>R$ 3.00</p>
-        <ion-button expand="full" color="primary" (click)="addToCart({ id: 6, name: 'Banana', price: 3.00, quantity: 0, imageurl: 'assets/images/banana.png' })">
+        <ion-button
+          expand="full"
+          color="primary"
+          (click)="addToCart({ id: 6, name: 'Banana', price: 3.00, quantity: 0, imageurl: 'assets/images/banana.png' })"
+        >
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
@@ -77,7 +104,11 @@
       <ion-card-content>
         <h2>Laranja</h2>
         <p>R$ 4.00</p>
-        <ion-button expand="full" color="primary" (click)="addToCart({ id: 7, name: 'Laranja', price: 4.00, quantity: 0, imageurl: 'assets/images/laranja.png' })">
+        <ion-button
+          expand="full"
+          color="primary"
+          (click)="addToCart({ id: 7, name: 'Laranja', price: 4.00, quantity: 0, imageurl: 'assets/images/laranja.png' })"
+        >
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
@@ -88,99 +119,135 @@
       <ion-card-content>
         <h2>Morango</h2>
         <p>R$ 10.00</p>
-        <ion-button expand="full" color="primary" (click)="addToCart({ id: 8, name: 'Morango', price: 10.00, quantity: 0, imageurl: 'assets/images/morango.png' })">
+        <ion-button
+          expand="full"
+          color="primary"
+          (click)="addToCart({ id: 8, name: 'Morango', price: 10.00, quantity: 0, imageurl: 'assets/images/morango.png' })"
+        >
           <ion-icon name="add-circle-outline"></ion-icon>
           +
         </ion-button>
       </ion-card-content>
     </ion-card>
   </div>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="totalItems > 0">
+  <ion-fab
+    vertical="bottom"
+    horizontal="end"
+    slot="fixed"
+    *ngIf="totalItems > 0"
+  >
     <ion-fab-button (click)="openCartModal()">
       {{ totalItems }}
     </ion-fab-button>
   </ion-fab>
 </ion-content>
 
-  <ion-modal [isOpen]="isCartModalOpen" (ionModalDidDismiss)="closeCartModal()">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Carrinho</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="closeCartModal()">Fechar</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content *ngIf="cart.length > 0; else emptyCart">
-      <ion-list>
-        <ion-item *ngFor="let item of cart">
-          <ion-label>
-            {{ item.name }} ({{ item.quantity }})
-          </ion-label>
-          <ion-note slot="end">
-            R$ {{ (item.price * item.quantity).toFixed(2) }}
-          </ion-note>
-          <ion-button color="danger" (click)="removeFromCart(item)">
-            <ion-icon name="remove-circle-outline"></ion-icon>
-            -
-          </ion-button>
-        </ion-item>
-      </ion-list>
-      <ion-footer>
-        <ion-item lines="none">
-          <ion-label><strong>Total</strong></ion-label>
-          <ion-note slot="end"><strong>R$ {{ calculateTotal().toFixed(2) }}</strong></ion-note>
-        </ion-item>
-        <div class="buttons-container">
-          <ion-button color="success" (click)="openPaymentModal()">Efetuar Pagamento</ion-button>
-          <ion-button color="danger" (click)="cancelPurchase()">Cancelar</ion-button>
-        </div>
-      </ion-footer>
-    </ion-content>
-    <ng-template #emptyCart>
-      <p style="text-align: center;">Seu carrinho está vazio.</p>
-    </ng-template>
-  </ion-modal>
-  
-  <ion-modal [isOpen]="isPaymentModalOpen" (ionModalDidDismiss)="closePaymentModal()">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Pagamento</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="closePaymentModal()">Fechar</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content *ngIf="cart.length > 0; else emptyCart">
-      <div *ngIf="!isCardPayment">
-        <h2>Escolha o método de pagamento</h2>
-        <div class="payment-icons">
-          <ion-icon name="cash-outline" size="large" (click)="selectPixPayment()"></ion-icon>
-          <ion-icon name="card-outline" size="large" (click)="selectCardPayment()"></ion-icon>
-        </div>
+<ion-modal [isOpen]="isCartModalOpen" (ionModalDidDismiss)="closeCartModal()">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Carrinho</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="closeCartModal()">Fechar</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content *ngIf="cart.length > 0; else emptyCart">
+    <ion-list>
+      <ion-item *ngFor="let item of cart">
+        <ion-label> {{ item.name }} ({{ item.quantity }}) </ion-label>
+        <ion-note slot="end">
+          R$ {{ (item.price * item.quantity).toFixed(2) }}
+        </ion-note>
+        <ion-button color="danger" (click)="removeFromCart(item)">
+          <ion-icon name="remove-circle-outline"></ion-icon>
+          -
+        </ion-button>
+      </ion-item>
+    </ion-list>
+    <ion-footer>
+      <ion-item lines="none">
+        <ion-label><strong>Total</strong></ion-label>
+        <ion-note slot="end"
+          ><strong>R$ {{ calculateTotal().toFixed(2) }}</strong></ion-note
+        >
+      </ion-item>
+      <div class="buttons-container">
+        <ion-button color="success" (click)="openPaymentModal()"
+          >Efetuar Pagamento</ion-button
+        >
+        <ion-button color="danger" (click)="cancelPurchase()"
+          >Cancelar</ion-button
+        >
       </div>
-      <div *ngIf="isPixPayment">
-        <h3>Pagamento via Pix</h3>
-        <div class="pix-details">
-          <ion-img src="assets/images/qrcode.png" alt="QR Code"></ion-img>
-          <ion-button (click)="copyPixCode()">Copiar Código Pix</ion-button>
-        </div>
+    </ion-footer>
+  </ion-content>
+  <ng-template #emptyCart>
+    <p style="text-align: center">Seu carrinho está vazio.</p>
+  </ng-template>
+</ion-modal>
+
+<ion-modal
+  [isOpen]="isPaymentModalOpen"
+  (ionModalDidDismiss)="closePaymentModal()"
+>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Pagamento</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="closePaymentModal()">Fechar</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content *ngIf="cart.length > 0; else emptyCart">
+    <div *ngIf="!isCardPayment">
+      <h2>Escolha o método de pagamento</h2>
+      <div class="payment-icons">
+        <ion-icon
+          name="cash-outline"
+          size="large"
+          (click)="selectPixPayment()"
+        ></ion-icon>
+        <ion-icon
+          name="card-outline"
+          size="large"
+          (click)="selectCardPayment()"
+        ></ion-icon>
       </div>
-      <div *ngIf="isCardPayment">
-        <h3>Cadastro do Cartão</h3>
+    </div>
+    <div *ngIf="isPixPayment">
+      <h3>Pagamento via Pix</h3>
+      <div class="pix-details">
+        <ion-img src="assets/images/qrcode.png" alt="QR Code"></ion-img>
+        <ion-button (click)="copyPixCode()">Copiar Código Pix</ion-button>
+        <br /><br />
+        <ion-button (click)="paymentPix()" [style.display]="display">
+          Confirmar Pagamento
+        </ion-button>
+      </div>
+    </div>
+    <div *ngIf="isCardPayment">
+      <h3>Cadastro do Cartão</h3>
+      <form [formGroup]="cardForm" (ngSubmit)="onSubmit()">
         <ion-item>
           <ion-label position="floating">Número do Cartão</ion-label>
-          <ion-input type="text"></ion-input>
+          <ion-input formControlName="cardNumber" type="text"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">Validade</ion-label>
-          <ion-input type="text"></ion-input>
+          <ion-label position="floating">Nome no Cartão</ion-label>
+          <ion-input formControlName="cardHolder" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Data de Expiração</ion-label>
+          <ion-input formControlName="expirationDate" type="text"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">CVV</ion-label>
-          <ion-input type="password"></ion-input>
+          <ion-input formControlName="cvv" type="text"></ion-input>
         </ion-item>
-        <ion-button color="primary" expand="full" (click)="confirmCardPayment()">Confirmar Compra</ion-button>
-      </div>
-    </ion-content>
-  </ion-modal>
+        <ion-button expand="block" type="submit" (click)="confirmCardPayment()"
+          >Confirmar Pagamento</ion-button
+        >
+      </form>
+    </div>
+  </ion-content>
+</ion-modal>
