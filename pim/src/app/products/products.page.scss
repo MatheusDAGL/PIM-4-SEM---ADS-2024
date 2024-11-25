@@ -1,4 +1,21 @@
 .products-list {
+  background-color: #b0b0de;
+}
+
+.products-list::before {
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("/assets/images/png.png");
+  background-size: cover;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+
+.products-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
