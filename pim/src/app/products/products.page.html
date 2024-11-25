@@ -142,6 +142,50 @@
     </ng-template>
   </ion-modal>
   
+  <ion-modal [isOpen]="isAddressModalOpen" (ionModalDidDismiss)="closeAddressModal()">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Endereço</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeAddressModal()">Fechar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-item>
+        <ion-label position="floating">Nome Completo</ion-label>
+        <ion-input type="text" [(ngModel)]="address.name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">CPF</ion-label>
+        <ion-input type="text" [(ngModel)]="address.cpf"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Logradouro</ion-label>
+        <ion-input type="text" [(ngModel)]="address.street"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Bairro</ion-label>
+        <ion-input type="text" [(ngModel)]="address.neighborhood"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">CEP</ion-label>
+        <ion-input type="text" [(ngModel)]="address.zip"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Cidade</ion-label>
+        <ion-input type="text" [(ngModel)]="address.city"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Estado</ion-label>
+        <ion-input type="text" [(ngModel)]="address.state"></ion-input>
+      </ion-item>
+      <ion-footer>
+        <ion-button color="primary" expand="full" (click)="openPaymentModal()">Próximo</ion-button>
+      </ion-footer>
+    </ion-content>
+  </ion-modal>
+    
   <ion-modal [isOpen]="isPaymentModalOpen" (ionModalDidDismiss)="closePaymentModal()">
     <ion-header>
       <ion-toolbar>

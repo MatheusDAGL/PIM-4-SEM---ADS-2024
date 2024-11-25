@@ -21,7 +21,17 @@ export class ProductsPage implements OnInit {
   ];
   cart: Product[] = [];
   totalItems = 0;
+  address = {
+    name: '',
+    cpf: '',
+    street: '',
+    neighborhood: '',
+    zip: '',
+    city: '',
+    state: ''
+  };
   isCartModalOpen = false;
+  isAddressModalOpen = false;
   isPaymentModalOpen = false;
   isPaymentView = false;
   isPixPayment = false;
@@ -67,13 +77,23 @@ export class ProductsPage implements OnInit {
 
   closeCartModal() {
     this.isCartModalOpen = false;
+    this.isAddressModalOpen = false;
     this.isPaymentView = false;
     this.isPixPayment = false;
     this.isCardPayment = false;
   }
 
+  openAddressModal() {
+    this.isCartModalOpen = false;
+    this.isAddressModalOpen = true;
+  }
+
+  closeAddressModal() {
+    this.isAddressModalOpen = false;
+  }
+
   openPaymentModal() {
-    this.isCartModalOpen = false; 
+    this.isAddressModalOpen = false;
     this.isPaymentModalOpen = true;
   }
 
@@ -123,7 +143,7 @@ export class ProductsPage implements OnInit {
         buttons: ['OK'],
       });
       await successAlert.present();
-      this.closeCartModal();
+      this.closePaymentModal();
       this.navCtrl.navigateRoot('/products');
     }, 15000);
   }
@@ -135,7 +155,7 @@ export class ProductsPage implements OnInit {
       buttons: ['OK'],
     });
     await alert.present();
-    this.closeCartModal();
+    this.closePaymentModal();
     this.navCtrl.navigateRoot('/products');
   }
 }
