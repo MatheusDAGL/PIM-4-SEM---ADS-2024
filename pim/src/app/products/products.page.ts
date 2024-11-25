@@ -22,6 +22,7 @@ export class ProductsPage implements OnInit {
   cart: Product[] = [];
   totalItems = 0;
   isCartModalOpen = false;
+  isPaymentModalOpen = false;
   isPaymentView = false;
   isPixPayment = false;
   isCardPayment = false;
@@ -66,6 +67,18 @@ export class ProductsPage implements OnInit {
 
   closeCartModal() {
     this.isCartModalOpen = false;
+    this.isPaymentView = false;
+    this.isPixPayment = false;
+    this.isCardPayment = false;
+  }
+
+  openPaymentModal() {
+    this.isCartModalOpen = false; 
+    this.isPaymentModalOpen = true;
+  }
+
+  closePaymentModal() {
+    this.isPaymentModalOpen = false;
     this.isPaymentView = false;
     this.isPixPayment = false;
     this.isCardPayment = false;
