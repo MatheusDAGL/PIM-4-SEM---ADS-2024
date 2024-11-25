@@ -10,9 +10,14 @@ import { BaseService } from '../services/base.service';
 })
 export class ProductsPage implements OnInit {
   products: Product[] = [
-    { id: 1, name: 'Produto 1', price: 10.00, quantity: 0, imageurl: 'assets/images/produto1.jpg' },
-    { id: 2, name: 'Produto 2', price: 20.00, quantity: 0, imageurl: 'assets/images/produto2.jpg' },
-    // Podemos adicionar mais produtos se quisermos
+    { id: 1, name: 'Brócolis', price: 6.00, quantity: 0, imageurl: 'assets/images/brocolis.png' },
+    { id: 2, name: 'Alface', price: 2.50, quantity: 0, imageurl: 'assets/images/alface.png' },
+    { id: 3, name: 'Tomate', price: 6.00, quantity: 0, imageurl: 'assets/images/tomate.png' },
+    { id: 4, name: 'Pimentão Verde', price: 4.00, quantity: 0, imageurl: 'assets/images/pimentaoVerde.png' },
+    { id: 5, name: 'Maçã', price: 5.00, quantity: 0, imageurl: 'assets/images/maca.png' },
+    { id: 6, name: 'Banana', price: 3.00, quantity: 0, imageurl: 'assets/images/banana.png' },
+    { id: 7, name: 'Laranja', price: 4.00, quantity: 0, imageurl: 'assets/images/laranja.png' },
+    { id: 8, name: 'Morango', price: 10.00, quantity: 0, imageurl: 'assets/images/morango.png' },
   ];
   cart: Product[] = [];
   totalItems = 0;
@@ -24,20 +29,10 @@ export class ProductsPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private alertController: AlertController,
-    private navCtrl: NavController,
-    private baseService: BaseService
+    private navCtrl: NavController
   ) { }
 
-  ngOnInit() {
-    this.loadProducts();
-  }
-
-  loadProducts() {
-  }
-
-  calculateTotal(): number {
-    return this.cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  }
+  ngOnInit() {}
 
   addToCart(product: Product) {
     this.totalItems++;
@@ -47,6 +42,21 @@ export class ProductsPage implements OnInit {
     } else {
       this.cart.push({ ...product, quantity: 1 });
     }
+  }
+
+  removeFromCart(product: Product) {
+    const cartItem = this.cart.find((item) => item.id === product.id);
+    if (cartItem) {
+      cartItem.quantity--;
+      if (cartItem.quantity === 0) {
+        this.cart = this.cart.filter((item) => item.id !== product.id);
+      }
+      this.totalItems--;
+    }
+  }
+
+  calculateTotal(): number {
+    return this.cart.reduce((total, item) => total + item.price * item.quantity, 0);
   }
 
   openCartModal() {
