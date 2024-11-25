@@ -61,12 +61,10 @@ export class ProductsPage implements OnInit {
   }
 
   openCartModal() {
-    console.log("Modal de carrinho aberto");
     this.isCartModalOpen = true;
   }
 
   closeCartModal() {
-    console.log("Modal de carrinho fechado");
     this.isCartModalOpen = false;
     this.isPaymentView = false;
     this.isPixPayment = false;
@@ -74,7 +72,6 @@ export class ProductsPage implements OnInit {
   }
 
   cancelPurchase() {
-    console.log("Compra cancelada");
     this.cart = [];
     this.totalItems = 0;
     this.closeCartModal();
@@ -86,20 +83,19 @@ export class ProductsPage implements OnInit {
   }
 
   selectPixPayment() {
-    console.log("Selecionando pagamento via Pix");
+    console.log("Selecionado pagamento via Pix");
     this.isPixPayment = true;
     this.isCardPayment = false;
   }
 
   selectCardPayment() {
-    console.log("Selecionando pagamento via Cartão");
+    console.log("Selecionado pagamento via Cartão");
     this.isCardPayment = true;
     this.isPixPayment = false;
   }
 
   async copyPixCode() {
     const pixCode = "123456789PIXCODE";
-    console.log("Código Pix copiado:", pixCode);
     await navigator.clipboard.writeText(pixCode);
     const alert = await this.alertController.create({
       header: 'Copiado!',
@@ -120,7 +116,6 @@ export class ProductsPage implements OnInit {
   }
 
   async confirmCardPayment() {
-    console.log("Pagamento via Cartão confirmado");
     const alert = await this.alertController.create({
       header: 'Sucesso!',
       message: 'Pagamento efetuado com sucesso!',
