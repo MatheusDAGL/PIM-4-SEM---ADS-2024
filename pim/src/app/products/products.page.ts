@@ -1,24 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, AlertController, NavController } from '@ionic/angular';
 import { Product } from '../interfaces/product.interface';
-import { BaseService } from '../services/base.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.page.html',
   styleUrls: ['./products.page.scss'],
 })
+
 export class ProductsPage implements OnInit {
   products: Product[] = [
-    { id: 1, name: 'Brócolis', price: 6.00, quantity: 0, imageurl: 'assets/images/brocolis.png' },
-    { id: 2, name: 'Alface', price: 2.50, quantity: 0, imageurl: 'assets/images/alface.png' },
-    { id: 3, name: 'Tomate', price: 6.00, quantity: 0, imageurl: 'assets/images/tomate.png' },
-    { id: 4, name: 'Pimentão Verde', price: 4.00, quantity: 0, imageurl: 'assets/images/pimentaoVerde.png' },
-    { id: 5, name: 'Maçã', price: 5.00, quantity: 0, imageurl: 'assets/images/maca.png' },
-    { id: 6, name: 'Banana', price: 3.00, quantity: 0, imageurl: 'assets/images/banana.png' },
-    { id: 7, name: 'Laranja', price: 4.00, quantity: 0, imageurl: 'assets/images/laranja.png' },
-    { id: 8, name: 'Morango', price: 10.00, quantity: 0, imageurl: 'assets/images/morango.png' },
+    { id: 1, name: 'Brócolis', price: 6.0, quantity: 0, imageurl: 'assets/images/brocolis.png' },
+    { id: 2, name: 'Alface', price: 2.5, quantity: 0, imageurl: 'assets/images/alface.png' },
+    { id: 3, name: 'Tomate', price: 6.0, quantity: 0, imageurl: 'assets/images/tomate.png' },
+    { id: 4, name: 'Pimentão Verde', price: 4.0, quantity: 0, imageurl: 'assets/images/pimentaoVerde.png' },
+    { id: 5, name: 'Maçã', price: 5.0, quantity: 0, imageurl: 'assets/images/maca.png' },
+    { id: 6, name: 'Banana', price: 3.0, quantity: 0, imageurl: 'assets/images/banana.png' },
+    { id: 7, name: 'Laranja', price: 4.0, quantity: 0, imageurl: 'assets/images/laranja.png' },
+    { id: 8, name: 'Morango', price: 10.0, quantity: 0, imageurl: 'assets/images/morango.png' },
   ];
+
   cart: Product[] = [];
   totalItems = 0;
   address = {
@@ -36,13 +38,32 @@ export class ProductsPage implements OnInit {
   isPaymentView = false;
   isPixPayment = false;
   isCardPayment = false;
+  cardForm: FormGroup;
+  addressForm: FormGroup;
+  display: any = 'none';
 
   constructor(
     private modalController: ModalController,
     private alertController: AlertController,
     private navCtrl: NavController,
-    private baseService: BaseService
-  ) { }
+    private formBuilder: FormBuilder
+  ) {
+    this.cardForm = this.formBuilder.group({
+      cardNumber: ['', [Validators.required, Validators.pattern(/^\d{16}$/)]],
+      expiryDate: ['', [Validators.required, Validators.pattern(/^\d{2}\/\d{2}$/)]],
+      cvv: ['', [Validators.required, Validators.pattern(/^\d{3}$/)]],
+    });
+
+    this.addressForm = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      cpf: ['', [Validators.required, Validators.pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/)]],
+      street: ['', [Validators.required]],
+      neighborhood: ['', [Validators.required]],
+      zip: ['', [Validators.required, Validators.pattern(/^\d{5}-\d{3}$/)]],
+      city: ['', [Validators.required]],
+      state: ['', [Validators.required]],
+    });
+  }
 
   ngOnInit() {}
 
@@ -110,31 +131,41 @@ export class ProductsPage implements OnInit {
     this.closeCartModal();
   }
 
+  async submitAddress() {
+    if (this.addressForm.valid) {
+      this.openPaymentModal();
+    } else {
+      const alert = await this.alertController.create({
+        header: 'Erro',
+        message: 'Por favor, preencha todos os campos obrigatórios corretamente.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+    }
+  }
   showPaymentOptions() {
-    console.log("Exibindo opções de pagamento");
     this.isPaymentView = true;
   }
 
   selectPixPayment() {
-    console.log("Selecionado pagamento via Pix");
     this.isPixPayment = true;
     this.isCardPayment = false;
   }
 
   selectCardPayment() {
-    console.log("Selecionado pagamento via Cartão");
     this.isCardPayment = true;
     this.isPixPayment = false;
   }
 
   async copyPixCode() {
-    const pixCode = "123456789PIXCODE";
+    const pixCode = '123456789PIXCODE';
     await navigator.clipboard.writeText(pixCode);
     const alert = await this.alertController.create({
-      header: 'Copiado!',
-      message: 'O código Pix foi copiado com sucesso!',
+      header: 'Código Pix copiado!',
+      message: `Código Pix: ${pixCode}`,
       buttons: ['OK'],
     });
+    if (alert) this.display = 'block';
     await alert.present();
     setTimeout(async () => {
       const successAlert = await this.alertController.create({
@@ -148,7 +179,7 @@ export class ProductsPage implements OnInit {
     }, 15000);
   }
 
-  async confirmCardPayment() {
+  async paymentPix() {
     const alert = await this.alertController.create({
       header: 'Sucesso!',
       message: 'Pagamento efetuado com sucesso!',
@@ -157,5 +188,41 @@ export class ProductsPage implements OnInit {
     await alert.present();
     this.closePaymentModal();
     this.navCtrl.navigateRoot('/products');
+=======
+    if (alert) setTimeout(() => {
+      location.reload();
+    }, 3000);
+  }
+
+  async confirmCardPayment() {
+    if (this.cardForm.valid) {
+      const alert = await this.alertController.create({
+        header: 'Sucesso!',
+        message: 'Pagamento efetuado com sucesso!',
+        buttons: ['OK'],
+      });
+      if (alert) setTimeout(() => {
+        location.reload();
+      }, 3000);
+      await alert.present();
+      this.closeCartModal();
+      this.navCtrl.navigateRoot('/products');
+    } else {
+      const alert = await this.alertController.create({
+        header: 'Erro!',
+        message: 'Preencha todos os campos corretamente.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+    }
+  }
+
+  onSubmit() {
+    if (this.cardForm.valid) {
+      console.log('Formulário enviado com sucesso!', this.cardForm.value);
+      this.confirmCardPayment();
+    } else {
+      console.log('Erro ao enviar o formulário. Verifique os campos.');
+    }
   }
 }

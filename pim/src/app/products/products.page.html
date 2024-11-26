@@ -102,88 +102,117 @@
   </ion-fab>
 </ion-content>
 
-  <ion-modal [isOpen]="isCartModalOpen" (ionModalDidDismiss)="closeCartModal()">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Carrinho</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="closeCartModal()">Fechar</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content *ngIf="cart.length > 0; else emptyCart">
-      <ion-list>
-        <ion-item *ngFor="let item of cart">
-          <ion-label>
-            {{ item.name }} ({{ item.quantity }})
-          </ion-label>
-          <ion-note slot="end">
-            R$ {{ (item.price * item.quantity).toFixed(2) }}
-          </ion-note>
-          <ion-button color="danger" (click)="removeFromCart(item)">
-            <ion-icon name="remove-circle-outline"></ion-icon>
-            -
-          </ion-button>
-        </ion-item>
-      </ion-list>
-      <ion-footer>
-        <ion-item lines="none">
-          <ion-label><strong>Total</strong></ion-label>
-          <ion-note slot="end"><strong>R$ {{ calculateTotal().toFixed(2) }}</strong></ion-note>
-        </ion-item>
-        <div class="buttons-container">
-          <ion-button color="success" (click)="openPaymentModal()">Efetuar Pagamento</ion-button>
-          <ion-button color="danger" (click)="cancelPurchase()">Cancelar</ion-button>
-        </div>
-      </ion-footer>
-    </ion-content>
-    <ng-template #emptyCart>
-      <p style="text-align: center;">Seu carrinho está vazio.</p>
-    </ng-template>
-  </ion-modal>
-  
-  <ion-modal [isOpen]="isAddressModalOpen" (ionModalDidDismiss)="closeAddressModal()">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Endereço</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="closeAddressModal()">Fechar</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
+<ion-modal [isOpen]="isCartModalOpen" (ionModalDidDismiss)="closeCartModal()">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Carrinho</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="closeCartModal()">Fechar</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content *ngIf="cart.length > 0; else emptyCart">
+    <ion-list>
+      <ion-item *ngFor="let item of cart">
+        <ion-label>
+          {{ item.name }} ({{ item.quantity }})
+        </ion-label>
+        <ion-note slot="end">
+          R$ {{ (item.price * item.quantity).toFixed(2) }}
+        </ion-note>
+        <ion-button color="danger" (click)="removeFromCart(item)">
+          <ion-icon name="remove-circle-outline"></ion-icon>
+          -
+        </ion-button>
+      </ion-item>
+    </ion-list>
+    <ion-footer>
+      <ion-item lines="none">
+        <ion-label><strong>Total</strong></ion-label>
+        <ion-note slot="end"><strong>R$ {{ calculateTotal().toFixed(2) }}</strong></ion-note>
+      </ion-item>
+      <div class="buttons-container">
+        <ion-button color="success" (click)="openAddressModal()">Finalizar Compra</ion-button>
+        <ion-button color="danger" (click)="cancelPurchase()">Cancelar</ion-button>
+      </div>
+    </ion-footer>
+  </ion-content>
+  <ng-template #emptyCart>
+    <p style="text-align: center;">Seu carrinho está vazio.</p>
+  </ng-template>
+</ion-modal>
+
+<ion-modal [isOpen]="isAddressModalOpen" (ionModalDidDismiss)="closeAddressModal()">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Endereço</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="closeAddressModal()">Fechar</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <form [formGroup]="addressForm" (ngSubmit)="submitAddress()">
       <ion-item>
         <ion-label position="floating">Nome Completo</ion-label>
-        <ion-input type="text" [(ngModel)]="address.name"></ion-input>
+        <ion-input type="text" formControlName="name"></ion-input>
       </ion-item>
+      <div *ngIf="addressForm.get('name').invalid && addressForm.get('name').touched">
+        <ion-text color="danger">Nome é obrigatório</ion-text>
+      </div>
+
       <ion-item>
         <ion-label position="floating">CPF</ion-label>
-        <ion-input type="text" [(ngModel)]="address.cpf"></ion-input>
+        <ion-input type="text" formControlName="cpf"></ion-input>
       </ion-item>
+      <div *ngIf="addressForm.get('cpf').invalid && addressForm.get('cpf').touched">
+        <ion-text color="danger">CPF é obrigatório e deve estar no formato 000.000.000-00</ion-text>
+      </div>
+
       <ion-item>
         <ion-label position="floating">Logradouro</ion-label>
-        <ion-input type="text" [(ngModel)]="address.street"></ion-input>
+        <ion-input type="text" formControlName="street"></ion-input>
       </ion-item>
+      <div *ngIf="addressForm.get('street').invalid && addressForm.get('street').touched">
+        <ion-text color="danger">Logradouro é obrigatório</ion-text>
+      </div>
+
       <ion-item>
         <ion-label position="floating">Bairro</ion-label>
-        <ion-input type="text" [(ngModel)]="address.neighborhood"></ion-input>
+        <ion-input type="text" formControlName="neighborhood"></ion-input>
       </ion-item>
+      <div *ngIf="addressForm.get('neighborhood').invalid && addressForm.get('neighborhood').touched">
+        <ion-text color="danger">Bairro é obrigatório</ion-text>
+      </div>
+
       <ion-item>
         <ion-label position="floating">CEP</ion-label>
-        <ion-input type="text" [(ngModel)]="address.zip"></ion-input>
+        <ion-input type="text" formControlName="zip"></ion-input>
       </ion-item>
+      <div *ngIf="addressForm.get('zip').invalid && addressForm.get('zip').touched">
+        <ion-text color="danger">CEP é obrigatório e deve estar no formato 00000-000</ion-text>
+      </div>
+
       <ion-item>
         <ion-label position="floating">Cidade</ion-label>
-        <ion-input type="text" [(ngModel)]="address.city"></ion-input>
+        <ion-input type="text" formControlName="city"></ion-input>
       </ion-item>
+      <div *ngIf="addressForm.get('city').invalid && addressForm.get('city').touched">
+        <ion-text color="danger">Cidade é obrigatória</ion-text>
+      </div>
+
       <ion-item>
         <ion-label position="floating">Estado</ion-label>
-        <ion-input type="text" [(ngModel)]="address.state"></ion-input>
+        <ion-input type="text" formControlName="state"></ion-input>
       </ion-item>
+      <div *ngIf="addressForm.get('state').invalid && addressForm.get('state').touched">
+        <ion-text color="danger">Estado é obrigatório</ion-text>
+      </div>
+
       <ion-footer>
-        <ion-button color="primary" expand="full" (click)="openPaymentModal()">Próximo</ion-button>
+        <ion-button color="primary" expand="full" type="submit">Próximo</ion-button>
       </ion-footer>
-    </ion-content>
+
   </ion-modal>
     
   <ion-modal [isOpen]="isPaymentModalOpen" (ionModalDidDismiss)="closePaymentModal()">
@@ -202,29 +231,71 @@
           <ion-icon name="cash-outline" size="large" (click)="selectPixPayment()"></ion-icon>
           <ion-icon name="card-outline" size="large" (click)="selectCardPayment()"></ion-icon>
         </div>
+    </form>
+  </ion-content>
+</ion-modal>
+
+<ion-modal
+  [isOpen]="isPaymentModalOpen"
+  (ionModalDidDismiss)="closePaymentModal()"
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Pagamento</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="closePaymentModal()">Fechar</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content *ngIf="cart.length > 0; else emptyCart">
+    <div *ngIf="!isCardPayment">
+      <h2>Escolha o método de pagamento</h2>
+      <div class="payment-icons">
+        <ion-icon
+          name="cash-outline"
+          size="large"
+          (click)="selectPixPayment()"
+        ></ion-icon>
+        <ion-icon
+          name="card-outline"
+          size="large"
+          (click)="selectCardPayment()"
+        ></ion-icon>
       </div>
-      <div *ngIf="isPixPayment">
-        <h3>Pagamento via Pix</h3>
-        <div class="pix-details">
-          <ion-img src="assets/images/qrcode.png" alt="QR Code"></ion-img>
-          <ion-button (click)="copyPixCode()">Copiar Código Pix</ion-button>
-        </div>
+    </div>
+    <div *ngIf="isPixPayment">
+      <h3>Pagamento via Pix</h3>
+      <div class="pix-details">
+        <ion-img src="assets/images/qrcode.png" alt="QR Code"></ion-img>
+        <ion-button (click)="copyPixCode()">Copiar Código Pix</ion-button>
+        <br /><br />
+        <ion-button (click)="paymentPix()" [style.display]="display">
+          Confirmar Pagamento
+        </ion-button>
       </div>
-      <div *ngIf="isCardPayment">
-        <h3>Cadastro do Cartão</h3>
+    </div>
+    <div *ngIf="isCardPayment">
+      <h3>Cadastro do Cartão</h3>
+      <form [formGroup]="cardForm" (ngSubmit)="onSubmit()">
         <ion-item>
           <ion-label position="floating">Número do Cartão</ion-label>
-          <ion-input type="text"></ion-input>
+          <ion-input formControlName="cardNumber" type="text"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">Validade</ion-label>
-          <ion-input type="text"></ion-input>
+          <ion-label position="floating">Nome no Cartão</ion-label>
+          <ion-input formControlName="cardHolder" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Data de Expiração</ion-label>
+          <ion-input formControlName="expirationDate" type="text"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">CVV</ion-label>
-          <ion-input type="password"></ion-input>
+          <ion-input formControlName="cvv" type="text"></ion-input>
         </ion-item>
-        <ion-button color="primary" expand="full" (click)="confirmCardPayment()">Confirmar Compra</ion-button>
-      </div>
-    </ion-content>
-  </ion-modal>
+        <ion-button expand="block" type="submit" (click)="confirmCardPayment()"
+          >Confirmar Pagamento</ion-button
+        >
+      </form>
+    </div>
+  </ion-content>
+</ion-modal>
