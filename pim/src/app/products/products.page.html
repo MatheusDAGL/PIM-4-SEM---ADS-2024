@@ -212,6 +212,25 @@
       <ion-footer>
         <ion-button color="primary" expand="full" type="submit">Próximo</ion-button>
       </ion-footer>
+
+  </ion-modal>
+    
+  <ion-modal [isOpen]="isPaymentModalOpen" (ionModalDidDismiss)="closePaymentModal()">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Pagamento</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closePaymentModal()">Fechar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content *ngIf="cart.length > 0; else emptyCart">
+      <div *ngIf="!isCardPayment">
+        <h2>Escolha o método de pagamento</h2>
+        <div class="payment-icons">
+          <ion-icon name="cash-outline" size="large" (click)="selectPixPayment()"></ion-icon>
+          <ion-icon name="card-outline" size="large" (click)="selectCardPayment()"></ion-icon>
+        </div>
     </form>
   </ion-content>
 </ion-modal>
@@ -219,7 +238,6 @@
 <ion-modal
   [isOpen]="isPaymentModalOpen"
   (ionModalDidDismiss)="closePaymentModal()"
->
   <ion-header>
     <ion-toolbar>
       <ion-title>Pagamento</ion-title>

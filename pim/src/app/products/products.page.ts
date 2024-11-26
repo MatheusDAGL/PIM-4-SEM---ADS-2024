@@ -23,6 +23,15 @@ export class ProductsPage implements OnInit {
 
   cart: Product[] = [];
   totalItems = 0;
+  address = {
+    name: '',
+    cpf: '',
+    street: '',
+    neighborhood: '',
+    zip: '',
+    city: '',
+    state: ''
+  };
   isCartModalOpen = false;
   isAddressModalOpen = false;
   isPaymentModalOpen = false;
@@ -97,7 +106,7 @@ export class ProductsPage implements OnInit {
 
   openAddressModal() {
     this.isCartModalOpen = false;
-    this.isAddressModalOpen = true; 
+    this.isAddressModalOpen = true;
   }
 
   closeAddressModal() {
@@ -165,7 +174,7 @@ export class ProductsPage implements OnInit {
         buttons: ['OK'],
       });
       await successAlert.present();
-      this.closeCartModal();
+      this.closePaymentModal();
       this.navCtrl.navigateRoot('/products');
     }, 15000);
   }
@@ -176,6 +185,10 @@ export class ProductsPage implements OnInit {
       message: 'Pagamento efetuado com sucesso!',
       buttons: ['OK'],
     });
+    await alert.present();
+    this.closePaymentModal();
+    this.navCtrl.navigateRoot('/products');
+=======
     if (alert) setTimeout(() => {
       location.reload();
     }, 3000);
